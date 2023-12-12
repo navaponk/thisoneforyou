@@ -32,7 +32,7 @@ body {
   .heart::before {
   content: '\2665'; /* Unicode character for a heart */
   color: red; /* You can change the color to your preference */
-  font-size: 24px; /* Adjust the size as needed */
+  font-size: 40px; /* Adjust the size as needed */
   display: inline-block;
 }
 
