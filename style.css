@@ -5,7 +5,7 @@ body {
     height: 100vh;
     width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Align items vertically */
     justify-content: center;
     align-items: center;
     font-family: "Oswald", sans-serif;
@@ -17,10 +17,10 @@ body {
   .countdown div {
     display: flex;
     justify-content: space-between;
-    align-items: center; 
-    width: 100%;
-    max-width: 400px;
-    margin: 10px; 
+    align-items: center; /* Align items horizontally */
+    width: 100%; /* Take full width of the container */
+    max-width: 400px; /* Set a maximum width for better visibility */
+    margin: 10px; /* Add some margin for better spacing */
   }
   
   .heart-container {
@@ -30,11 +30,11 @@ body {
   }
 
   .heart::before {
-    content: '\2665'; 
-    color: rgb(255, 0, 0); 
-    font-size: 24px; 
-    display: inline-block;
-  }
+  content: '\2665'; /* Unicode character for a heart */
+  color: red; /* You can change the color to your preference */
+  font-size: 24px; /* Adjust the size as needed */
+  display: inline-block;
+}
 
   .happy-anniversary-text {
     display: none;
@@ -52,5 +52,4 @@ body {
     border-radius: 10px;
     margin-top: 20px;
   }
-
 
