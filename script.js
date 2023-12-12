@@ -1,6 +1,10 @@
 const targetDate = new Date("2023-12-18T00:00:00").getTime();
 let showWatchNowBox = false;
 
+// Add an audio element for background music
+const backgroundMusic = new Audio('/jazz.mp3');
+backgroundMusic.loop = true; // Set to true for continuous looping
+
 function updateCountdown() {
   const now = new Date().getTime();
   const timeLeft = targetDate - now;
@@ -9,6 +13,9 @@ function updateCountdown() {
   if (timeLeft <= 0 && !showWatchNowBox) {
     // Hide the countdown container
     document.getElementById("countdownContainer").style.display = "none";
+
+    // Fade out the music gradually
+    fadeOutMusic();
 
     // Show the "Happy Anniversary" text
     document.getElementById("anniversaryText").style.display = "block";
@@ -24,16 +31,41 @@ function updateCountdown() {
     // Stop further execution of the function
     clearInterval(timerInterval);
   } else {
-    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    // If music is not playing, start playing it
+    if (backgroundMusic.paused) {
+      backgroundMusic.play();
+    }
 
-    document.getElementById("days").textContent = days < 10 ? "0" + days : days;
-    document.getElementById("hours").textContent = hours < 10 ? "0" + hours : hours;
-    document.getElementById("minutes").textContent = minutes < 10 ? "0" + minutes : minutes;
-    document.getElementById("seconds").textContent = seconds < 10 ? "0" + seconds : seconds;
+    // Update the countdown display
+    updateCountdownDisplay(timeLeft);
   }
+}
+
+function fadeOutMusic() {
+  // Gradually reduce the volume until it reaches 0
+  let volume = 1.0;
+  const fadeOutInterval = setInterval(function () {
+    if (volume > 0) {
+      volume -= 0.05;
+      backgroundMusic.volume = volume;
+    } else {
+      // Stop the interval and the music
+      clearInterval(fadeOutInterval);
+      backgroundMusic.pause();
+    }
+  }, 500); // Adjust the interval duration as needed
+}
+
+function updateCountdownDisplay(timeLeft) {
+  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+  document.getElementById("days").textContent = days < 10 ? "0" + days : days;
+  document.getElementById("hours").textContent = hours < 10 ? "0" + hours : hours;
+  document.getElementById("minutes").textContent = minutes < 10 ? "0" + minutes : minutes;
+  document.getElementById("seconds").textContent = seconds < 10 ? "0" + seconds : seconds;
 }
 
 function hideAnniversaryTextAndShowWatchNowBox() {
